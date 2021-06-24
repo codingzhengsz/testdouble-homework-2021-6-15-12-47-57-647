@@ -3,6 +3,7 @@ package com.tw.banking;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,6 +37,24 @@ public class PrinterTest {
 
         // then
         assertEquals("2021/06/24 | 10 | 10", statementLine);
+    }
+
+    @Test
+    void should_print_statementLines_given_transactions() {
+        // given
+        Console console = mock(Console.class);
+        Printer printer = new Printer(console);
+
+        Transaction transaction1 = new Transaction("24/06/2021", 200);
+        Transaction transaction2 = new Transaction("24/06/2021", -100);
+
+        List<Transaction> transactions = Arrays.asList(transaction1, transaction2);
+        // when
+        printer.print(transactions);
+
+        // then
+        verify(console, times(1)).printLine("24/06/2021 | 200 | 200");
+        verify(console, times(1)).printLine("24/06/2021 | -100 | 100");
     }
 
 }
