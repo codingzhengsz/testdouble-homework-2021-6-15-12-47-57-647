@@ -2,6 +2,9 @@ package com.tw.banking;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 
 public class AccountTest {
@@ -32,6 +35,24 @@ public class AccountTest {
 
         // then
         verify(transactionRepository, times(1)).addWithdraw(eq(10));
+    }
+
+
+    @Test
+    void should_print_statement_given_transactions() {
+        //given
+        Printer printer = mock(Printer.class);
+        TransactionRepository transactionRepository = mock(TransactionRepository.class);
+
+        List<Transaction> transactions = new ArrayList<>();
+        when(transactionRepository.allTransactions()).thenReturn(transactions);
+
+        Account account = new Account(transactionRepository, printer);
+        //when
+        account.printStatement();
+
+        // then
+        verify(printer, times(1)).print(transactions);
     }
 
 }
