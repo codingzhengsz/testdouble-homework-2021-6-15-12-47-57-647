@@ -36,5 +36,17 @@ public class TransactionRepositoryTest {
         assertEquals(transactionRepository.transactions.get(0).amount(), 10);
     }
 
+    @Test
+    void should_add_transaction_when_addWithdraw_given_amount() {
+        // given
+        TransactionRepository transactionRepository = new TransactionRepository(new Clock());
+
+        // when
+        transactionRepository.addWithdraw(10);
+
+        // then
+        assertThat(transactionRepository.transactions.size()).isEqualTo(1);
+    }
+
 
 }
