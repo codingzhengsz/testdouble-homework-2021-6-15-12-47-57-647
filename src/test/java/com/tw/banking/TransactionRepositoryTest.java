@@ -48,5 +48,17 @@ public class TransactionRepositoryTest {
         assertThat(transactionRepository.transactions.size()).isEqualTo(1);
     }
 
+    @Test
+    void should_create_transaction_with_negative_amount_when_add_withdraw() {
+        // given
+        TransactionRepository transactionRepository = new TransactionRepository(new Clock());
+
+        // when
+        transactionRepository.addWithdraw(10);
+
+        // then
+        assertEquals(transactionRepository.transactions.get(0).amount(), -10);
+    }
+
 
 }
