@@ -2,6 +2,9 @@ package com.tw.banking;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static java.util.Collections.unmodifiableList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -58,6 +61,18 @@ public class TransactionRepositoryTest {
 
         // then
         assertEquals(transactionRepository.transactions.get(0).amount(), -10);
+    }
+
+    @Test
+    void should_return_unmodifiableList() {
+        // given
+        TransactionRepository transactionRepository = new TransactionRepository(new Clock());
+
+        // when
+        List<Transaction> transactions = transactionRepository.allTransactions();
+
+        // then
+        assertEquals(transactions,unmodifiableList(transactionRepository.transactions));
     }
 
 
